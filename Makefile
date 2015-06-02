@@ -1,6 +1,7 @@
 .DEFAULT_GOAL=test
 UNAME = $(shell uname)
 PREFIX=github.com/derekparker/delve
+OURGOPATH=$(firstword $(subst :, ,$(GOPATH)))
 
 build:
 	go build github.com/derekparker/delve/cmd/dlv
@@ -17,7 +18,7 @@ ifeq "$(UNAME)" "Darwin"
 ifeq "$(CERT)" ""
 	$(error You must provide a CERT env var)
 endif
-	codesign -s $(CERT) $(GOPATH)/bin/dlv
+	codesign -s $(CERT) $(OURGOPATH)/bin/dlv
 endif
 
 test:
